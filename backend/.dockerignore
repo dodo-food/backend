@@ -1,0 +1,41 @@
+# ── Build outputs (régénérés dans l'image) ────────────────────────────────────
+dist/
+.tsbuildinfo
+build/
+
+# ── Dépendances (installées dans le conteneur) ───────────────────────────────
+node_modules/
+.pnpm-store/
+
+# ── Environnement / Secrets (jamais dans l'image) ────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+service-account*.json
+firebase-adminsdk*.json
+google-services.json
+
+# ── Tests (inutiles en production) ───────────────────────────────────────────
+**/*.spec.ts
+**/*.test.ts
+**/__tests__/
+**/test/
+coverage/
+jest.config.*
+
+# ── IDE / Éditeur ─────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Documentation (inutile dans l'image) ─────────────────────────────────────
+*.md

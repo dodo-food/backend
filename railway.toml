@@ -1,0 +1,33 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+#  FoodBF / Dodo — Railway Configuration
+#  Fichier lu automatiquement par Railway depuis la racine du repo.
+#
+#  Stack : NestJS 10 · Express · Socket.IO · TypeORM · BullMQ
+#  Build : Dockerfile multi-stage (target: production) dans ./backend/
+#
+#  Prérequis Railway :
+#    1. Ajouter un service PostgreSQL (plugin Railway)
+#    2. Ajouter un service Redis (plugin Railway) — optionnel
+#    3. Relier les variables ${{Postgres.DATABASE_URL}} et ${{Redis.REDIS_URL}}
+#    4. Saisir les variables manuelles (voir backend/deploy/RAILWAY_DEPLOY.md)
+#
+#  Guide complet : backend/deploy/RAILWAY_DEPLOY.md
+# ═══════════════════════════════════════════════════════════════════════════════
+
+[build]
+builder        = "DOCKERFILE"
+dockerfilePath = "backend/Dockerfile"
+dockerContext  = "backend"
+
+# Cibler le stage de production du Dockerfile multi-stage
+dockerTarget   = "production"
+
+[deploy]
+# Railway injecte PORT automatiquement — main.ts lit process.env.PORT
+# NestJS écoute sur 0.0.0.0:$PORT (requis derrière le proxy Railway)
+healthcheckPath    = "/api/v1/ping"
+healthcheckTimeout = 100
+
+# Politique de redémarrage en cas d'échec
+restartPolicyType       = "ON_FAILURE"
+restartPolicyMaxRetries = 10
